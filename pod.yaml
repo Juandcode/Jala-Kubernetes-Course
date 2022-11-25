@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - name: nginx
+          containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+spec:
+  containers:
+    - name: postgres
+      image: postgres
+      env:
+      - name: POSTGRES_PASSWORD
+        value: "diego"
+      ports:
+        - name: postgres
+          containerPort: 5433
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redisdev
+  labels:
+    environment: development
+    app: redisdev
+spec:
+  containers:
+    - name: redisdev
+      image: redis
+      ports:
+        - name: redisdev
+          containerPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redistest
+  labels:
+    environment: test
+    app: redistest
+spec:
+  containers:
+    - name: redistest
+      image: redis
+      ports:
+        - name: redistest
+          containerPort: 8081
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redisprod
+  labels:
+    environment: test
+    app: redisprod
+spec:
+  containers:
+    - name: redisprod
+      image: redis
+      ports:
+        - name: redisprod
+          containerPort: 8082
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql
+spec:
+  containers:
+    - name: mysql
+      image: mysql
+      env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: "diego"
+      - name: MYSQL_DATABASE
+        value: "dbdiego"
+      ports:
+        - name: mysql
+          containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kuar
+spec:
+  containers:
+    - name: kuar
+      image: gcr.io/kuar-demo/kuard-amd64:1
+      ports:
+        - name: kuar
+          containerPort: 8080
