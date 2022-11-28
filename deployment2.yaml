@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caleb-deploy
+  labels:
+    env: dev
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      tier: web-server
+  template:
+    metadata:
+      name: caleb
+      labels:
+        tier: web-server
+    spec:
+      containers:
+        - name: caleb
+          image: calebespinoza/store-products:3.0
+          ports:
+            - name: caleb
+              containerPort: 80
