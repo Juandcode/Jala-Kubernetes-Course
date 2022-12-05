@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver-deploy
+  labels:
+    env: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: web-server
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      name: mysql
+      labels:
+        tier: web-server
+    spec:
+      containers:
+        - name: mysql
+          env:
+            - name: DATABASE_NAME
+              valueFrom:
+                  configMapKeyRef:
+                      name: web-app
+                      key: DATABASE_NAME 
+          image: mysql
+          ports:
+            - name: mysql
+              containerPort: 3306
